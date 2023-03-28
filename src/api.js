@@ -50,7 +50,7 @@ export default class Api {
         retry: this.isRetrying,
       };
 
-      return this.client.request(newRequest, true);
+      return this.client.request(newRequest);
     });
   }
 

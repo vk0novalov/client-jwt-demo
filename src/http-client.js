@@ -34,8 +34,8 @@ export default class HttpClient {
     }
   }
 
-  async request(config, forceRequestInterceptors = false) {
-    return await this.fetch(config.url, forceRequestInterceptors ? this.#prepareRequest(config) : config)
+  async request(config) {
+    return await this.fetch(config.url, this.#prepareRequest(config))
       .then(async r => {
         if ((r.status / 100 | 0) !== 2) {
           return this.#handleError(r, config);
@@ -48,21 +48,21 @@ export default class HttpClient {
   }
 
   async get(url) {
-    const config = this.#prepareRequest({
+    const config = {
       url: this.baseURL + url,
       method: 'GET',
       headers: getDefaultHeaders(),
-    });
+    };
     return await this.request(config);
   }
 
   async post(url, body) {
-    const config = this.#prepareRequest({
+    const config = {
       url: this.baseURL + url,
       method: 'POST',
       headers: getDefaultHeaders(),
       body: JSON.stringify(body),
-    });
+    };
     return await this.request(config);
   }
 
